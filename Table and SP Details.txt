@@ -1,0 +1,157 @@
+----------------------------------------------  TABLE SCRIPT -----------------------------------------------------
+
+/****** Object:  Table [dbo].[Contact_Master]    Script Date: 28-07-2024 21:34:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Contact_Master](
+	[ContactID] [int] IDENTITY(1,1) NOT NULL,
+	[FirstName] [varchar](50) NOT NULL,
+	[LastName] [varchar](50) NOT NULL,
+	[Email] [varchar](100) NOT NULL,
+	[PhoneNumber] [varchar](20) NOT NULL,
+	[Address] [varchar](300) NOT NULL,
+	[Country] [varchar](50) NOT NULL,
+	[State] [varchar](50) NOT NULL,
+	[City] [varchar](50) NOT NULL,
+	[PostalCode] [int] NOT NULL,
+	[Delete_Status_Flag] [bit] NULL,
+	[Created_Date] [datetime] NULL,
+	[Modified_Date] [datetime] NULL,
+ CONSTRAINT [PK_Contact_Master] PRIMARY KEY CLUSTERED 
+(
+	[ContactID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[UserMaster]    Script Date: 28-07-2024 21:34:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UserMaster](
+	[UserId] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [varchar](30) NOT NULL,
+	[Role] [varchar](30) NOT NULL,
+	[Email] [varchar](50) NOT NULL,
+	[Password] [varchar](20) NOT NULL,
+	[Delete_Status_Flag] [bit] NULL,
+	[CreatedDate] [datetime] NULL,
+ CONSTRAINT [PK_UserMaster] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Contact_Master] ON 
+GO
+INSERT [dbo].[Contact_Master] ([ContactID], [FirstName], [LastName], [Email], [PhoneNumber], [Address], [Country], [State], [City], [PostalCode], [Delete_Status_Flag], [Created_Date], [Modified_Date]) VALUES (1, N'Veera', N'Pandian', N'pandi.vp2012@gmail.com', N'7010866619', N'33/A Ashok Nagar', N'India', N'TamilNadu', N'Chennai', 600001, 1, CAST(N'2024-07-28T01:21:43.143' AS DateTime), NULL)
+GO
+INSERT [dbo].[Contact_Master] ([ContactID], [FirstName], [LastName], [Email], [PhoneNumber], [Address], [Country], [State], [City], [PostalCode], [Delete_Status_Flag], [Created_Date], [Modified_Date]) VALUES (2, N'Muthu', N'Raj', N'muthraj@gmail.com', N'9976615427', N'23/A Saidapet', N'India', N'TamilNadu', N'Chennai', 600004, 0, CAST(N'2024-07-28T00:00:00.000' AS DateTime), NULL)
+GO
+INSERT [dbo].[Contact_Master] ([ContactID], [FirstName], [LastName], [Email], [PhoneNumber], [Address], [Country], [State], [City], [PostalCode], [Delete_Status_Flag], [Created_Date], [Modified_Date]) VALUES (3, N'Sowmiya', N'Ram', N'sowmiyapandian@gmail.com', N'7708406168', N'23/A Anna Nagar', N'India', N'Tamil Nadu', N'Chennai', 600008, 1, CAST(N'2024-07-28T13:06:31.657' AS DateTime), CAST(N'2024-07-28T13:08:07.443' AS DateTime))
+GO
+INSERT [dbo].[Contact_Master] ([ContactID], [FirstName], [LastName], [Email], [PhoneNumber], [Address], [Country], [State], [City], [PostalCode], [Delete_Status_Flag], [Created_Date], [Modified_Date]) VALUES (4, N'Kabilan', N'Kavi', N'kabilankavidasan@gmail.com', N'7894561230', N'Hosur', N'India', N'California', N'New York', 620001, 1, CAST(N'2024-07-28T19:58:18.467' AS DateTime), NULL)
+GO
+SET IDENTITY_INSERT [dbo].[Contact_Master] OFF
+GO
+SET IDENTITY_INSERT [dbo].[UserMaster] ON 
+GO
+INSERT [dbo].[UserMaster] ([UserId], [UserName], [Role], [Email], [Password], [Delete_Status_Flag], [CreatedDate]) VALUES (1, N'Veera Pandian', N'Admin', N'pandi.vp2012@gmai.com', N'Admin@123', 1, CAST(N'2024-07-28T00:00:00.000' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[UserMaster] OFF
+GO
+ALTER TABLE [dbo].[Contact_Master] ADD  CONSTRAINT [Default_Contact_Master_Delete_Status]  DEFAULT ((1)) FOR [Delete_Status_Flag]
+GO
+ALTER TABLE [dbo].[UserMaster] ADD  CONSTRAINT [Default_UserMaster_Delete_Status]  DEFAULT ((1)) FOR [Delete_Status_Flag]
+GO
+
+
+----------------------------------------------  STORED PROCEDURE SCRIPT -----------------------------------------------------
+
+/****** Object:  StoredProcedure [dbo].[SP_Contact_Master]    Script Date: 28-07-2024 21:34:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SP_Contact_Master]
+@ContactID int =null,
+@FirstName varchar(50) =null,
+@LastName varchar(50) =null,
+@Email varchar(100) =null,
+@PhoneNumber varchar(20) =null,
+@Address varchar(300) =null,
+@Country varchar(50) =null,
+@State  varchar(50) =null,
+@City  varchar(50) =null,
+@PostalCode int=null,
+@Type varchar(50)=null
+
+AS
+BEGIN 
+
+Declare @CurrentDate datetime;
+set @CurrentDate=(Select SWITCHOFFSET(SYSDATETIMEOFFSET(),'+05:30'));
+
+IF(@Type='Get')
+BEGIN
+Select * from Contact_Master where Delete_Status_Flag=1
+order by FirstName ASC
+END
+
+IF(@Type='Record')
+BEGIN
+Select * from Contact_Master where Delete_Status_Flag=1 and ContactID=@ContactID
+order by FirstName ASC
+END
+
+IF(@Type='Insert')
+BEGIN
+Insert into Contact_Master 
+([FirstName],[LastName],[Email],[PhoneNumber],[Address],[Country],[State],[City],[PostalCode],[Created_Date])
+
+values(@FirstName,@LastName,@Email,@PhoneNumber,@Address,@Country,@State,@City,@PostalCode,@CurrentDate)
+
+END
+IF(@Type='Update')
+BEGIN
+
+UPDATE Contact_Master SET FirstName=@FirstName,LastName=LastName,Email=@Email,PhoneNumber=@PhoneNumber,Address=@Address,
+Country=@Country,[State]=@State,City=@City,Modified_Date=@CurrentDate from  Contact_Master
+Where ContactID=@ContactID
+
+END
+
+IF(@Type='Delete')
+BEGIN
+-------------------------NOTE: Usage Of Delete_Status_Flag to reduce Data Loss ------------------------------
+
+--Delete From Contact_Master where ContactID=@ContactID;
+Update Contact_Master set Delete_Status_Flag=0 where ContactID=@ContactID
+END
+
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_Login_Authenticate]    Script Date: 28-07-2024 21:34:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SP_Login_Authenticate]
+@UserName VARCHAR(50),
+@Password VARCHAR(50)
+
+AS
+BEGIN
+
+Select top 1* from UserMaster where Delete_Status_Flag=1 and UserName=@UserName and Password=@Password
+
+END
+
+GO
+
+
+
+

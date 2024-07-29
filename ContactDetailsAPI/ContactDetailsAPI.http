@@ -1,0 +1,23 @@
+@ContactDetailsAPI_HostAddress = http://localhost:5001
+
+//Contact Get All
+GET {{ContactDetailsAPI_HostAddress}}/contacts
+Accept: application/json
+
+//Contact Get By ID
+GET {{ContactDetailsAPI_HostAddress}}/contacts/
+Accept: application/json
+
+//Contact Post
+POST {{ContactDetailsAPI_HostAddress}}/contacts/add/
+Accept: application/json
+
+//Contact Edit
+PUT {{ContactDetailsAPI_HostAddress}}/contacts/edit/
+Accept: application/json
+
+//Contact Delete
+DELETE {{ContactDetailsAPI_HostAddress}}/contacts/Delete/
+Accept: application/json
+
+###
