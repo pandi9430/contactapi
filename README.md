@@ -12,3 +12,5 @@ To check:
    - **Email**: admin@knila.com
    - **Password**: Admin@123
 4. Access the API.
+5. Change the db connection to ur connection
+6. I Have attached the SQL tables with data and Stored Procedure with the Source Code.
