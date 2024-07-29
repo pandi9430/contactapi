@@ -20,7 +20,6 @@ try
     // Add services to the container
     builder.Services.AddControllers();
     builder.Services.AddScoped<ISqlDataAccessRepository, SqlDataAccessRepository>();
-    builder.Services.AddScoped<IAuthRepository, AuthService>();
     builder.Services.AddScoped<TokenService>();
 
     // Set dependency injection

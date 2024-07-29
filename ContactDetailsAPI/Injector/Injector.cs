@@ -14,7 +14,6 @@ namespace ContactDetailsAPI.Injector
         {
 
             //Authentication
-            services.AddScoped<IAuthRepository, AuthService>();
             services.AddScoped<ISqlDataAccessRepository, SqlDataAccessRepository>();
             services.AddScoped<TokenService>();
 
