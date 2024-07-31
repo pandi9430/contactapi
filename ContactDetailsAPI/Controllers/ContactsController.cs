@@ -7,7 +7,7 @@ namespace ContactDetailsAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class ContactsController : ControllerBase
     {
         private readonly IContactRepository<Contact, int> _contactService;
