@@ -117,7 +117,7 @@ END
 IF(@Type='Update')
 BEGIN
 
-UPDATE Contact_Master SET FirstName=@FirstName,LastName=LastName,Email=@Email,PhoneNumber=@PhoneNumber,Address=@Address,
+UPDATE Contact_Master SET FirstName=@FirstName,LastName=@LastName,Email=@Email,PhoneNumber=@PhoneNumber,Address=@Address,
 Country=@Country,[State]=@State,City=@City,Modified_Date=@CurrentDate from  Contact_Master
 Where ContactID=@ContactID
 
