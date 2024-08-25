@@ -7,6 +7,7 @@
         public const string NoRecords = "No Records Found";
         public const string RecordAddSuccess = "Record Inserted Successfully";
         public const string RecordUpdateSuccess = "Record Updated Successfully";
+        public const string PasswordResetSuccessful = "Password Successfully Reset";
         public const string RecordDelete = "Record Deleted Successfully";
     }
 }

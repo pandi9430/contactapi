@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\contactuiclone\\contactapi\\ContactDetailsAPI\\ContactDetailsAPI.csproj": {}
+    "D:\\contactapi\\ContactDetailsAPI\\ContactDetailsAPI.csproj": {}
   },
   "projects": {
-    "D:\\contactuiclone\\contactapi\\ContactDetailsAPI\\ContactDetailsAPI.csproj": {
+    "D:\\contactapi\\ContactDetailsAPI\\ContactDetailsAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\contactuiclone\\contactapi\\ContactDetailsAPI\\ContactDetailsAPI.csproj",
+        "projectUniqueName": "D:\\contactapi\\ContactDetailsAPI\\ContactDetailsAPI.csproj",
         "projectName": "ContactDetailsAPI",
-        "projectPath": "D:\\contactuiclone\\contactapi\\ContactDetailsAPI\\ContactDetailsAPI.csproj",
-        "packagesPath": "C:\\Users\\16794\\.nuget\\packages\\",
-        "outputPath": "D:\\contactuiclone\\contactapi\\ContactDetailsAPI\\obj\\",
+        "projectPath": "D:\\contactapi\\ContactDetailsAPI\\ContactDetailsAPI.csproj",
+        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
+        "outputPath": "D:\\contactapi\\ContactDetailsAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\16794\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

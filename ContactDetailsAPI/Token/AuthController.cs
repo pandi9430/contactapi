@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ContactDetailsAPI.Data;
+using ContactDetailsAPI.Service;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,16 +11,22 @@ using System.Text;
 public class AuthController : ControllerBase
 {
     private readonly IConfiguration _configuration;
-    public AuthController(IConfiguration configuration)
+    private readonly AuthService _userService;
+
+    public AuthController(IConfiguration configuration, AuthService userService)
     {
         _configuration = configuration;
+        _userService = userService;
     }
+
     [HttpPost("login")]
-    public IActionResult Login(LoginDTO loginDTO)
+    public async Task<IActionResult> Login([FromBody] LoginDTO loginDTO)
     {
-        // This is just for demonstration purposes. In a real application, you should validate the user from the database.
-        if (loginDTO.Email == "admin@knila.com" && loginDTO.Password == "Admin@123")
+        var response = await _userService.UserAuth(loginDTO);
+
+        if (response.Code == ResponseCode.Success)
         {
+            // Generate JWT token
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
 
@@ -26,7 +34,7 @@ public class AuthController : ControllerBase
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                        new Claim(ClaimTypes.Name, loginDTO.Email)
+                new Claim(ClaimTypes.Name, loginDTO.Email)
                 }),
                 Expires = DateTime.UtcNow.AddHours(23),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -35,10 +43,14 @@ public class AuthController : ControllerBase
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
 
-            return Ok(new { Token = tokenString });
+            return Ok(new {
+                Token = tokenString,
+                Role_Name = response.Result.Role_Name
+            });
         }
 
-        return Unauthorized("Invalid credentials");
+         return Unauthorized(response.Message);
+        
     }
 }
 
@@ -46,4 +58,5 @@ public class LoginDTO
 {
     public string Email { get; set; }
     public string Password { get; set; }
+    public string? Role_Name { get; set; }
 }

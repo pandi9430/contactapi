@@ -10,17 +10,28 @@ using NLog;
 using NLog.Web;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using ContactDetailsAPI.Models;
+using ContactDetailsAPI.Service;
+using UserDetailsAPI.Repository;
+using UserDetailsAPI.Service;
 
 var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
 try
-{
+    {
     var builder = WebApplication.CreateBuilder(args);
 
     // Add services to the container
     builder.Services.AddControllers();
+    // Register services
     builder.Services.AddScoped<ISqlDataAccessRepository, SqlDataAccessRepository>();
+    builder.Services.AddScoped<IUserRepository<User, int, ResetPasswordFilter, RegisterFilter, UserStatusFilter>, UserService>();
+    builder.Services.AddScoped<IAuthRepository<LoginDTO>, AuthService>();
     builder.Services.AddScoped<TokenService>();
+    builder.Services.AddScoped<IContactRepository<Contact, int>, ContactService>();
+
+    // Register AuthService
+    builder.Services.AddScoped<AuthService>();  // Add this line to register AuthService
 
     // Set dependency injection
     Injector.DependenceyInjection(builder.Services); // Pass the services collection without ref
